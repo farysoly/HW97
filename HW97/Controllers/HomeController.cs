@@ -1,6 +1,7 @@
 ﻿using HW97.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace HW97.Controllers
 {
@@ -13,18 +14,23 @@ namespace HW97.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
         [HttpPost]
-        public IActionResult Login([FromForm]LoginModel model)
+        public IActionResult Index([FromForm] UserModel model)
         {
-            var s = Repository.GetUsers();
-            if (s.Exists(c => c.NationalCode == model.UserName && c.CellPhone == model.Password))
+            UserRepository user = new();
+            var s = user.GetDb<UserModel>();
+            if (s.Exists(c => c.NationalCode == model.NationalCode && c.CellPhone == model.CellPhone))
                 return RedirectToAction("UsersAction");
             else
-                return View("RegisterUsers");
+            {
+                ViewBag.ErrorMessage = "رمز عبور وارد شده اشتباه است.";
+                return View("Index");// return View("RegisterUsers");
+            }
+        }
+        public IActionResult Login()
+        {
+            return View();
+
         }
 
         public IActionResult Privacy()
@@ -36,9 +42,10 @@ namespace HW97.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult RegisterUsers([FromForm] UserModel user)
+        public IActionResult RegisterUsers([FromForm] UserModel userModel)
         {
-            Repository.SetUsersDb(user);
+            UserRepository user = new();
+            user.SetDb<UserModel>(userModel);
             return View();
         }
 

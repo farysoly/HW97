@@ -1,40 +1,41 @@
 ﻿using Newtonsoft.Json;
 namespace HW97.Models
 {
-    public static class Repository
+    public abstract class Repository
     {
-        static string usersDbPath = @"D:\.Net\MyProject\HW9\HW97\HW97\DataBase\UsersDb.json";
+        string filePath = "";
         
-        public static void SetUsersDb(UserModel user)
+        public Repository(string filePath) => this.filePath = filePath;
+        public void SetDb<T>(T user) where T : class
         {
-            var users = GetContent<UserModel>();
+            var users = GetContent<T>();
             users.Add(user);
             SetContent(users);
         }
 
-        public static List<UserModel> GetUsers()
+        public List<T> GetDb<T>() where T : class
         {
             try
             {
-                return GetContent<UserModel>();
+                return GetContent<T>();
             }
             catch (Exception)
             {
-                return new List<UserModel>();
+                return new List<T>();
             }
         }
 
-        static List<T> GetContent<T>()
+        List<T> GetContent<T>()
         {
-            var content = File.ReadAllText(usersDbPath);
+            var content = File.ReadAllText(filePath);
             var list = JsonConvert.DeserializeObject<List<T>>(content);
             return list;
         }
 
-        static void SetContent<T>(List<T> list)
+        void SetContent<T>(List<T> list)
         {
             var content = JsonConvert.SerializeObject(list);
-            File.WriteAllText(usersDbPath, content);
+            File.WriteAllText(filePath, content);
         }
     }
 }
