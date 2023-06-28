@@ -66,6 +66,9 @@
                 <label for="CellPhone">رمز عبور:</label>
                 <input asp-for="CellPhone">
             </div>
+            <div>
+                 <p> ثبت نام نکرده اید؟ <a asp-controller="Home" asp-action="RegisterUsers">ثبت نام</a></p>
+            <div>
             <button type="submit">تایید</button>
                 @if (ViewBag.ErrorMessage != null)
             {
