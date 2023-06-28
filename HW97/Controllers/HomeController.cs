@@ -24,7 +24,7 @@ namespace HW97.Controllers
             else
             {
                 ViewBag.ErrorMessage = "رمز عبور وارد شده اشتباه است.";
-                return View("Register");//return View("RegisterUsers");
+                return View("Register");
             }
         }
         public IActionResult Index()
