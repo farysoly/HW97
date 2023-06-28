@@ -1,23 +1,24 @@
 ﻿using Newtonsoft.Json;
 namespace HW97.Models
 {
-    public abstract class Repository
+    public abstract class Repository<T>
     {
-        string filePath = @"D:\C#\MaktabSharif\HW\week9\HW97\DataBase\";
-        //D:\C#\MaktabSharif\HW\week9\HW97\DataBase\UserModelDb.json
-        //"D:\\.Net\\MyProject\\HW9\\HW97\\HW97\\DataBase\\UserModelDb.json"
-        public void SetDb<T>(T model) where T : class
+        string filePath = $@"DataBase\{typeof(T).Name}Db.json";
+        public void SetDb(T model)
         {
-            var models = GetContent<T>(model);
+            var models = GetContent();
+            if(models is null)
+                models = new List<T>();
+
             models.Add(model);
             SetContent(models);
         }
 
-        public List<T> GetDb<T>(T model) where T : class
+        public List<T> GetDb()
         {
             try
             {
-                return GetContent<T>(model);
+                return GetContent();
             }
             catch (Exception)
             {
@@ -25,18 +26,17 @@ namespace HW97.Models
             }
         }
 
-        List<T> GetContent<T>(T model)
+        List<T> GetContent()
         {
-            var path = $@"{filePath}{typeof(T).Name}Db.json";
-            var content = File.ReadAllText(path);
+            var content = File.ReadAllText(filePath);
             var list = JsonConvert.DeserializeObject<List<T>>(content);
             return list;
         }
 
-        void SetContent<T>(List<T> list)
+        void SetContent(List<T> list)
         {
             var content = JsonConvert.SerializeObject(list);
-            File.WriteAllText($@"{filePath}{nameof(T)}Db.json", content);
+            File.WriteAllText(filePath, content);
         }
     }
 }

@@ -1,0 +1,46 @@
+﻿@model List<AccountingModel> 
+@{
+    ViewData["Title"] = "صفحه اصلی";
+}
+<div class="card">
+    <div class="card-header">
+        تراکنش‌ها
+    </div>
+    <div class="card-body">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">ردیف</th>
+              <th scope="col">نام حسابداری</th>
+              <th scope="col">بدهکار</th>
+              <th scope="col">بستانکار</th>
+              <th scope="col">تاریخ تراکنش</th>
+              <th scope="col">توضیحات</th>
+            </tr>
+          </thead>
+          <tbody>
+                @{
+                    if(Model is not null)
+                    {
+                        var index = 1;
+                        foreach(var item in Model)
+                        {
+                            <tr>
+                              <td>@index</td>
+                              <td>@item.AccountingName</td>
+                              <td>@item.Debit</td>
+                              <td>@item.Credit</td>
+                              <td>@item.TransactionDate</td>
+                              <td>@item.Description</td>
+                            </tr>
+                            index++;
+                        }
+                    }
+              }
+          </tbody>
+        </table>
+        <div class="text-start mt-1">
+            <a class="btn btn-danger" asp-controller="Home" asp-action="UserAction">بازگشت</a>
+        </div>
+    </div>
+</div>

@@ -14,44 +14,63 @@ namespace HW97.Controllers
             _logger = logger;
         }
 
+        public IActionResult Login()
+        {
+            return View();
+        }
         [HttpPost]
         public IActionResult Login([FromForm] UserModel model)
         {
             UserRepository user = new();
-            var userModelList = user.GetDb(model);
+            var userModelList = user.GetDb();
             if (userModelList.Exists(c => c.NationalCode == model.NationalCode && c.CellPhone == model.CellPhone))
-                return RedirectToAction("UsersAction");
+                return RedirectToAction(nameof(UserAction));
             else
             {
                 ViewBag.ErrorMessage = "رمز عبور وارد شده اشتباه است.";
-                return View("Register");
+                return View();
             }
         }
-        public IActionResult Index()
-        {
-            return View();
 
-        }
-
-        public IActionResult Privacy()
+        public IActionResult UserAction()
         {
             return View();
         }
-        public IActionResult UsersAction()
+
+        public IActionResult TransactionData()
+        {
+            AccountingRepository accountingRepository = new();
+            var transactionsList = accountingRepository.GetDb();
+            return View(transactionsList);
+        }
+
+        public IActionResult NewTransaction()
         {
             return View();
         }
         [HttpPost]
-        public IActionResult RegisterUsers([FromForm] UserModel userModel)
+        public IActionResult NewTransaction([FromForm] AccountingModel model)
+        {
+            AccountingRepository accountingRepository = new();
+            accountingRepository.SetDb(model);
+            return RedirectToAction(nameof(UserAction));
+        }
+        public IActionResult Amount()
+        {
+            AccountingRepository accountingRepository = new();
+            var remain = accountingRepository.GetAccountingRamein();
+            return View(remain);
+        }
+        public IActionResult RegisterUser()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult RegisterUser([FromForm] UserModel userModel)
         {
             UserRepository user = new();
             user.SetDb(userModel);
-            return RedirectToAction("Index");
-        }
-        public IActionResult MethodName()
-        {
-            // کدهای مورد نظر برای اجرا
-            return Json(new { success = true }); // یا هر نوع پاسخی که می‌خواهید برگردانید
+            return RedirectToAction("Login");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -1,0 +1,33 @@
+﻿@model double
+@{
+    ViewData["Title"] = "صفحه اصلی";
+}
+<div class="card">
+    <div class="card-header">
+        تراکنش‌ها
+    </div>
+    <div class="card-body">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">باقیمانده </th>
+            </tr>
+          </thead>
+          <tbody>
+                @{
+                      var remain = Model;
+                        var index = 1;
+                        
+                            <tr>
+                              <td>@index</td>
+                              <td>@remain</td>
+                            </tr>
+                    
+              }
+          </tbody>
+        </table>
+        <div class="text-start mt-1">
+            <a class="btn btn-danger" asp-controller="Home" asp-action="UserAction">بازگشت</a>
+        </div>
+    </div>
+</div>
