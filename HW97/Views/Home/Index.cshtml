@@ -60,11 +60,11 @@
         <form asp-controller="Home" asp-action="Index" method="post">
             <div class="form-group">
                 <label for="NationalCode">نام کاربری:</label>
-                <Input asp-for="NationalCode">
+                <input asp-for="NationalCode">
             </div>
             <div class="form-group">
                 <label for="CellPhone">رمز عبور:</label>
-                <Input asp-for="CellPhone">
+                <input asp-for="CellPhone">
             </div>
             <button type="submit">تایید</button>
                 @if (ViewBag.ErrorMessage != null)

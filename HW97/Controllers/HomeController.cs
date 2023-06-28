@@ -18,13 +18,13 @@ namespace HW97.Controllers
         public IActionResult Index([FromForm] UserModel model)
         {
             UserRepository user = new();
-            var s = user.GetDb<UserModel>();
-            if (s.Exists(c => c.NationalCode == model.NationalCode && c.CellPhone == model.CellPhone))
+            var userModelList = user.GetDb<UserModel>();
+            if (userModelList.Exists(c => c.NationalCode == model.NationalCode && c.CellPhone == model.CellPhone))
                 return RedirectToAction("UsersAction");
             else
             {
                 ViewBag.ErrorMessage = "رمز عبور وارد شده اشتباه است.";
-                return View("Index");// return View("RegisterUsers");
+                return View("Register");//return View("RegisterUsers");
             }
         }
         public IActionResult Login()
@@ -46,7 +46,7 @@ namespace HW97.Controllers
         {
             UserRepository user = new();
             user.SetDb<UserModel>(userModel);
-            return View();
+            return RedirectToAction("Index");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
