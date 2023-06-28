@@ -3,14 +3,13 @@ namespace HW97.Models
 {
     public abstract class Repository
     {
-        string filePath = "";
+        string filePath = @"D:\.Net\MyProject\HW9\HW97\HW97\DataBase\";
         
-        public Repository(string filePath) => this.filePath = filePath;
-        public void SetDb<T>(T user) where T : class
+        public void SetDb<T>(T model) where T : class
         {
-            var users = GetContent<T>();
-            users.Add(user);
-            SetContent(users);
+            var models = GetContent<T>();
+            models.Add(model);
+            SetContent(models);
         }
 
         public List<T> GetDb<T>() where T : class
@@ -27,7 +26,7 @@ namespace HW97.Models
 
         List<T> GetContent<T>()
         {
-            var content = File.ReadAllText(filePath);
+            var content = File.ReadAllText($@"{filePath}{nameof(T)}Db.json");
             var list = JsonConvert.DeserializeObject<List<T>>(content);
             return list;
         }
@@ -35,7 +34,7 @@ namespace HW97.Models
         void SetContent<T>(List<T> list)
         {
             var content = JsonConvert.SerializeObject(list);
-            File.WriteAllText(filePath, content);
+            File.WriteAllText($@"{filePath}{nameof(T)}Db.json", content);
         }
     }
 }
