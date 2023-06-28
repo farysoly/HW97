@@ -15,7 +15,7 @@ namespace HW97.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index([FromForm] UserModel model)
+        public IActionResult Login([FromForm] UserModel model)
         {
             UserRepository user = new();
             var userModelList = user.GetDb<UserModel>();
@@ -27,7 +27,7 @@ namespace HW97.Controllers
                 return View("Register");//return View("RegisterUsers");
             }
         }
-        public IActionResult Login()
+        public IActionResult Index()
         {
             return View();
 
