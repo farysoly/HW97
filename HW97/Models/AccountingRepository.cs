@@ -4,7 +4,8 @@
     {
         public double SetAccountingRamein()
         {
-            var accountingList = GetDb<AccountingModel>();
+            AccountingModel accountingModel = new AccountingModel();
+            var accountingList = GetDb(accountingModel);
             var debitSum = accountingList.Sum(c => c.Debit);
             var creditSum = accountingList.Sum(c => c.Credit);
             return debitSum - creditSum;

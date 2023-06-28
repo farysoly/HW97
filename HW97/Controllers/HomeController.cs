@@ -18,7 +18,7 @@ namespace HW97.Controllers
         public IActionResult Login([FromForm] UserModel model)
         {
             UserRepository user = new();
-            var userModelList = user.GetDb<UserModel>();
+            var userModelList = user.GetDb(model);
             if (userModelList.Exists(c => c.NationalCode == model.NationalCode && c.CellPhone == model.CellPhone))
                 return RedirectToAction("UsersAction");
             else
@@ -45,8 +45,13 @@ namespace HW97.Controllers
         public IActionResult RegisterUsers([FromForm] UserModel userModel)
         {
             UserRepository user = new();
-            user.SetDb<UserModel>(userModel);
+            user.SetDb(userModel);
             return RedirectToAction("Index");
+        }
+        public IActionResult MethodName()
+        {
+            // کدهای مورد نظر برای اجرا
+            return Json(new { success = true }); // یا هر نوع پاسخی که می‌خواهید برگردانید
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

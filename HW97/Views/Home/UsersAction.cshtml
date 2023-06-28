@@ -18,7 +18,7 @@
             background-color: #fff;
             padding: 20px;
             border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 12px 15px rgba(0, 0, 0, 0.1);
         }
 
         .form-group {
@@ -57,16 +57,28 @@
     <div class="container">
         <form>
             <div class="form-group">
-                <label for="username">asdsad:</label>
-                <input type="text" id="username" name="username">
+               <button id="a" class="btn btn-primary">Button A</button>
             </div>
-            <div class="form-group">
-                <label for="password">asddsddasdsdر:</label>
-                <input type="password" id="password" name="password">
-            </div>
-            <button type="submit">تایید</button>
         </form>
     </div>
+    <script>
+    $(document).ready(function() {
+        $("#a").click(function() {
+            $.ajax({
+                url: "/Home/MethodName", // آدرس کنترلر و عملکرد مورد نظر
+                type: "POST",
+                success: function(response) {
+                    console.log("متد اجرا شد");
+                    // دستورات بعد از اجرای متد
+                },
+                error: function() {
+                    console.log("خطا در اجرای متد");
+                }
+            });
+        });
+    });
+    </script>
+
 </body>
 </html>
 
