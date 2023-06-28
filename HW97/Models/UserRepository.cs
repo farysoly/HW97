@@ -1,6 +1,6 @@
 ﻿namespace HW97.Models
 {
-    public class UserRepository<UserModel> : Repository
+    public class UserRepository : Repository
     {
         
     }
